@@ -81,6 +81,12 @@ while running:
 
         vision = robot.get_surrounding_tiles(TILES_X * 32, TILES_Y * 32, tilemap)
 
+        action = robot.think(vision)
+        result = action()
+
+        if result is not None:
+            bullets.append(result)
+
         if robot.position[1] % 32 == 0 and robot.position[0] % 32 == 0:
             if robot.facing == 'b' and vision.bottom in BLOCKING_TILES: 
                 robot.can_move_forward = False
@@ -103,12 +109,6 @@ while running:
             if vision.current_tile == 4:  # medikit
                 tilemap[vision.current_tiles_x_y[1]][vision.current_tiles_x_y[0]] = 0
                 robot.health = min(robot.health + 100, 1000)
-
-            action = robot.think(vision)
-            result = action()
-
-            if result is not None:
-                bullets.append(result)
 
         robot.move_forward()
 
