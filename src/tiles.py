@@ -1,0 +1,3 @@
+BLOCKING_TILES = [
+    1
+]
